@@ -1,9 +1,13 @@
 const chatWindow = document.getElementById("chat-window");
 const userInput = document.getElementById("user-input");
 const sendBtn = document.getElementById("send-btn");
-const toggleThemeBtn = document.getElementById("toggle-theme");
 
-sendBtn.addEventListener("click", () => {
+sendBtn.addEventListener("click", handleUserInput);
+userInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") handleUserInput();
+});
+
+function handleUserInput() {
   const input = userInput.value.trim();
   if (!input) return;
 
@@ -12,17 +16,8 @@ sendBtn.addEventListener("click", () => {
 
   setTimeout(() => {
     generateResponse(input);
-  }, 500);
-});
-
-userInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") sendBtn.click();
-});
-
-toggleThemeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  toggleThemeBtn.textContent = document.body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
-});
+  }, 600);
+}
 
 function addMessage(sender, text) {
   const msg = document.createElement("div");
@@ -32,17 +27,16 @@ function addMessage(sender, text) {
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-// Simulated AI response (mock LLM)
 function generateResponse(input) {
   const lower = input.toLowerCase();
-  let response = "Hmm... I’m still learning! Try asking about AI, LLMs, or e-learning tools.";
+  let response = "I'm still learning! Try asking about JavaScript, AI, or LLMs.";
 
-  if (lower.includes("ai")) {
-    response = "AI in education helps personalize learning through intelligent tutoring systems, adaptive content, and smart recommendations.";
-  } else if (lower.includes("llm")) {
-    response = "Large Language Models (LLMs) like ChatGPT or BERT are trained on massive datasets and help power chatbots, tutors, and virtual assistants.";
-  } else if (lower.includes("course")) {
-    response = "You can explore courses on IBM SkillsBuild, Coursera, or edX to learn about machine learning, data science, and more.";
+  if (lower.includes("javascript") && lower.includes("variable")) {
+    response = `Awesome! In JavaScript, you can declare variables using var, let, or const:\n\nlet name = 'Alsten';\nconst age = 25;\n\nDo you want to try creating your own variable?`;
+  } else if (lower.includes("llm") || lower.includes("ai")) {
+    response = `LLMs (Large Language Models) like GPT help LearnBot understand and generate responses. They're trained on massive datasets to answer intelligently!`;
+  } else if (lower.includes("hello")) {
+    response = "Hello! What topic would you like to explore today?";
   }
 
   addMessage("bot", response);
