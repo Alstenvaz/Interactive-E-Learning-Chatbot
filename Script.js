@@ -3,12 +3,30 @@ const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-sendBtn.addEventListener('click', () => {
+sendBtn.addEventListener('click', async () => {
   const input = userInput.value.trim();
-  if (input) {
-    addMessage(input, 'user');
-    getAIResponse(input);
-    userInput.value = '';
+  if (!input) return;
+
+  addMessage(input, 'user');
+  userInput.value = '';
+
+  try {
+    const res = await fetch('http://localhost:3000/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: input }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      addMessage(data.reply, 'bot');
+    } else {
+      addMessage("Sorry, I couldn't process your request.", 'bot');
+      console.error('Backend error:', data.error);
+    }
+  } catch (err) {
+    addMessage("Network error. Please try again.", 'bot');
+    console.error('Fetch error:', err);
   }
 });
 
@@ -22,38 +40,6 @@ function addMessage(message, type) {
   messageEl.textContent = message;
   chatBox.appendChild(messageEl);
   chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-async function getAIResponse(input) {
-  addMessage("Thinking...", "bot");
-  const lastBotMsg = document.querySelector(".bot-message:last-child");
-
-  try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer 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"
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: "You are LearnBot, an educational AI that explains tech topics simply." },
-          { role: "user", content: input }
-        ]
-      })
-    });
-
-    const data = await res.json();
-    lastBotMsg.remove();
-    const reply = data.choices?.[0]?.message?.content?.trim() || "Sorry, I didn't understand that.";
-    addMessage(reply, 'bot');
-
-  } catch (error) {
-    lastBotMsg.remove();
-    console.error(error);
-    addMessage("Oops! Something went wrong while reaching the AI.", "bot");
-  }
 }
 
 // Dark Mode Toggle
