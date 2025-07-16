@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Learn Bot - Alsten Vaz</title>
+  <title>LearnBot – Alsten Vaz</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Learn Bot – Alsten Vaz</h1>
-      <button id="toggle-theme">🌙 Dark Mode</button>
+  <div class="chat-container">
+    <header class="chat-header">
+      <img src="https://twemoji.maxcdn.com/v/latest/72x72/1f9d1-1f3fd-200d-1f4bb.png" alt="Avatar" class="avatar" />
+      <h1>LearnBot – <span>Alsten Vaz</span></h1>
     </header>
-    <main id="chat-window">
-      <div class="message bot">Hi! I’m Learn Bot. Ask me about e-learning, LLMs, or AI in education 📘🤖</div>
+    
+    <main id="chat-window" class="chat-window">
+      <div class="message bot">Hi! I’m Learnbot. What would you like to learn today?</div>
     </main>
-    <footer>
-      <input type="text" id="user-input" placeholder="Type your question..." />
+
+    <footer class="chat-footer">
+      <input type="text" id="user-input" placeholder="Ask me something..." />
       <button id="send-btn">Send</button>
     </footer>
   </div>
