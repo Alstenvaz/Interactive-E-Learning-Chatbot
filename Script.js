@@ -1,43 +1,50 @@
-const chatWindow = document.getElementById("chat-window");
-const userInput = document.getElementById("user-input");
-const sendBtn = document.getElementById("send-btn");
+const chatBox = document.getElementById('chat-box');
+const userInput = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-sendBtn.addEventListener("click", handleUserInput);
-userInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") handleUserInput();
+const responses = {
+  "html": "HTML is the structure of a webpage. It uses tags like <h1>, <p>, <div>, etc.",
+  "css": "CSS styles the webpage. You can change colors, layouts, and fonts.",
+  "javascript": "JavaScript adds interactivity. You can make things happen when users click buttons.",
+  "react": "React is a JavaScript library for building user interfaces.",
+  "help": "You can ask me about HTML, CSS, JavaScript, or React!"
+  "python": "Python is a versatile programming language popular in web development, data science, and AI.",
+  "sql": "SQL is a language used to communicate with and manage databases.",
+  "nosql": "NoSQL databases are designed for flexible, scalable data storage, often for big data and real-time web apps.",
+  "git": "Git is a version control system that helps developers track changes and collaborate.",
+  "api": "APIs allow different software applications to communicate with each other.",
+  "cybersecurity": "Cybersecurity involves protecting systems and data from digital attacks.",
+  "help": "You can ask me about HTML, CSS, JavaScript, React, Python, SQL, NoSQL, Git, APIs, or Cybersecurity!"
+};
+
+sendBtn.addEventListener('click', () => {
+  const input = userInput.value.trim().toLowerCase();
+  if (input) {
+    addMessage(input, 'user');
+    addMessage(userInput.value, 'user');
+    respond(input);
+    userInput.value = '';
+  }
+@@ -28,7 +35,7 @@ function addMessage(message, type) {
+}
+
+function respond(input) {
+  let reply = "Hmm, I'm not sure about that. Try asking me about HTML, CSS, or JS!";
+  let reply = "Hmm, I'm not sure about that. Try asking me about HTML, CSS, JavaScript, Python, SQL, or Git!";
+  for (let key in responses) {
+    if (input.includes(key)) {
+      reply = responses[key];
+@@ -41,3 +48,12 @@ function respond(input) {
+userInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') sendBtn.click();
 });
 
-function handleUserInput() {
-  const input = userInput.value.trim();
-  if (!input) return;
-
-  addMessage("user", input);
-  userInput.value = "";
-
-  setTimeout(() => {
-    generateResponse(input);
-  }, 600);
-}
-
-function addMessage(sender, text) {
-  const msg = document.createElement("div");
-  msg.className = `message ${sender}`;
-  msg.textContent = text;
-  chatWindow.appendChild(msg);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-
-function generateResponse(input) {
-  const lower = input.toLowerCase();
-  let response = "I'm still learning! Try asking about JavaScript, AI, or LLMs.";
-
-  if (lower.includes("javascript") && lower.includes("variable")) {
-    response = `Awesome! In JavaScript, you can declare variables using var, let, or const:\n\nlet name = 'Alsten';\nconst age = 25;\n\nDo you want to try creating your own variable?`;
-  } else if (lower.includes("llm") || lower.includes("ai")) {
-    response = `LLMs (Large Language Models) like GPT help LearnBot understand and generate responses. They're trained on massive datasets to answer intelligently!`;
-  } else if (lower.includes("hello")) {
-    response = "Hello! What topic would you like to explore today?";
+// Dark Mode Toggle
+darkModeToggle.addEventListener('change', () => {
+  if (darkModeToggle.checked) {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
   }
-
-  addMessage("bot", response);
-}
+});
