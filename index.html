@@ -1,28 +1,22 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LearnBot – Alsten Vaz</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearnBot - E-Learning Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LearnBot - Alsten Vaz</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-container">
-    <header class="chat-header">
-      <img src="https://twemoji.maxcdn.com/v/latest/72x72/1f9d1-1f3fd-200d-1f4bb.png" alt="Avatar" class="avatar" />
-      <h1>LearnBot – <span>Alsten Vaz</span></h1>
+  <div class="chatbot-container">
+    <h1>👨‍🏫 LearnBot</h1>
+    <header>
+      <h1>👨‍🏫 LearnBot - Alsten Vaz</h1>
+      <label class="switch">
+        <input type="checkbox" id="dark-mode-toggle" />
+        <span class="slider round"></span>
+      </label>
     </header>
-    
-    <main id="chat-window" class="chat-window">
-      <div class="message bot">Hi! I’m Learnbot. What would you like to learn today?</div>
-    </main>
-
-    <footer class="chat-footer">
-      <input type="text" id="user-input" placeholder="Ask me something..." />
-      <button id="send-btn">Send</button>
-    </footer>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <div class="chat-box" id="chat-box">
+      <div class="bot-message">Hi! I’m LearnBot. What would you like to learn today?</div>
+    </div>
