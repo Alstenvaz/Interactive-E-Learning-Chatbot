@@ -11,7 +11,8 @@ body {
 }
 
 .chatbot-container {
-@@ -13,28 +16,40 @@ body {
+  background: white;
+  border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   width: 400px;
   padding: 20px;
@@ -57,7 +58,33 @@ h1 {
 }
 
 .bot-message {
-@@ -68,3 +83,83 @@ button {
+  background: #e0ebff;
+  align-self: flex-start;
+}
+
+.user-message {
+  background: #c1f0c1;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
 }
