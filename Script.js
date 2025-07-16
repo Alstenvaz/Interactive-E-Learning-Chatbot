@@ -1,83 +1,49 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #ffffff;
-  color: #000;
-  transition: background 0.3s, color 0.3s;
-  margin: 0;
+const chatWindow = document.getElementById("chat-window");
+const userInput = document.getElementById("user-input");
+const sendBtn = document.getElementById("send-btn");
+const toggleThemeBtn = document.getElementById("toggle-theme");
+
+sendBtn.addEventListener("click", () => {
+  const input = userInput.value.trim();
+  if (!input) return;
+
+  addMessage("user", input);
+  userInput.value = "";
+
+  setTimeout(() => {
+    generateResponse(input);
+  }, 500);
+});
+
+userInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendBtn.click();
+});
+
+toggleThemeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  toggleThemeBtn.textContent = document.body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
+});
+
+function addMessage(sender, text) {
+  const msg = document.createElement("div");
+  msg.className = `message ${sender}`;
+  msg.textContent = text;
+  chatWindow.appendChild(msg);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-body.dark {
-  background-color: #121212;
-  color: #eee;
-}
+// Simulated AI response (mock LLM)
+function generateResponse(input) {
+  const lower = input.toLowerCase();
+  let response = "Hmm... I’m still learning! Try asking about AI, LLMs, or e-learning tools.";
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-}
+  if (lower.includes("ai")) {
+    response = "AI in education helps personalize learning through intelligent tutoring systems, adaptive content, and smart recommendations.";
+  } else if (lower.includes("llm")) {
+    response = "Large Language Models (LLMs) like ChatGPT or BERT are trained on massive datasets and help power chatbots, tutors, and virtual assistants.";
+  } else if (lower.includes("course")) {
+    response = "You can explore courses on IBM SkillsBuild, Coursera, or edX to learn about machine learning, data science, and more.";
+  }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#chat-window {
-  height: 400px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  padding: 10px;
-  background: inherit;
-  margin-top: 10px;
-  border-radius: 8px;
-}
-
-.message {
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 10px;
-  max-width: 80%;
-  word-wrap: break-word;
-}
-
-.message.user {
-  background-color: #b3e5fc;
-  align-self: flex-end;
-  text-align: right;
-}
-
-.message.bot {
-  background-color: #e0e0e0;
-  text-align: left;
-}
-
-body.dark .message.user {
-  background-color: #0277bd;
-  color: white;
-}
-
-body.dark .message.bot {
-  background-color: #333;
-}
-
-footer {
-  display: flex;
-  margin-top: 10px;
-}
-
-input[type="text"] {
-  flex-grow: 1;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-button {
-  padding: 10px;
-  font-size: 1rem;
-  margin-left: 5px;
-  cursor: pointer;
-  border-radius: 8px;
+  addMessage("bot", response);
 }
