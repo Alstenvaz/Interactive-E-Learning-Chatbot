@@ -3,25 +3,11 @@ const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-const responses = {
-  "html": "HTML is the structure of a webpage. It uses tags like <h1>, <p>, <div>, etc.",
-  "css": "CSS styles the webpage. You can change colors, layouts, and fonts.",
-  "javascript": "JavaScript adds interactivity. You can make things happen when users click buttons.",
-  "react": "React is a JavaScript library for building user interfaces.",
-  "python": "Python is a versatile programming language popular in web development, data science, and AI.",
-  "sql": "SQL is a language used to communicate with and manage databases.",
-  "nosql": "NoSQL databases are designed for flexible, scalable data storage, often for big data and real-time web apps.",
-  "git": "Git is a version control system that helps developers track changes and collaborate.",
-  "api": "APIs allow different software applications to communicate with each other.",
-  "cybersecurity": "Cybersecurity involves protecting systems and data from digital attacks.",
-  "help": "You can ask me about HTML, CSS, JavaScript, React, Python, SQL, NoSQL, Git, APIs, or Cybersecurity!"
-};
-
 sendBtn.addEventListener('click', () => {
-  const input = userInput.value.trim().toLowerCase();
+  const input = userInput.value.trim();
   if (input) {
-    addMessage(userInput.value, 'user');
-    respond(input);
+    addMessage(input, 'user');
+    getAIResponse(input);
     userInput.value = '';
   }
 });
@@ -38,15 +24,36 @@ function addMessage(message, type) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function respond(input) {
-  let reply = "Hmm, I'm not sure about that. Try asking me about HTML, CSS, JavaScript, Python, SQL, or Git!";
-  for (let key in responses) {
-    if (input.includes(key)) {
-      reply = responses[key];
-      break;
-    }
+async function getAIResponse(input) {
+  addMessage("Thinking...", "bot");
+  const lastBotMsg = document.querySelector(".bot-message:last-child");
+
+  try {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer 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"
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: "You are LearnBot, an educational AI that explains tech topics simply." },
+          { role: "user", content: input }
+        ]
+      })
+    });
+
+    const data = await res.json();
+    lastBotMsg.remove();
+    const reply = data.choices?.[0]?.message?.content?.trim() || "Sorry, I didn't understand that.";
+    addMessage(reply, 'bot');
+
+  } catch (error) {
+    lastBotMsg.remove();
+    console.error(error);
+    addMessage("Oops! Something went wrong while reaching the AI.", "bot");
   }
-  setTimeout(() => addMessage(reply, 'bot'), 500);
 }
 
 // Dark Mode Toggle
