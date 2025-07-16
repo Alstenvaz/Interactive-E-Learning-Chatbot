@@ -1,22 +1,31 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LearnBot - E-Learning Chatbot</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LearnBot - Alsten Vaz</title>
+  <title>LearnBot – Alsten Vaz</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="chatbot-container">
-    <h1>👨‍🏫 LearnBot</h1>
     <header>
-      <h1>👨‍🏫 LearnBot - Alsten Vaz</h1>
+      <h1>👨‍🏫 LearnBot – Alsten Vaz</h1>
       <label class="switch">
         <input type="checkbox" id="dark-mode-toggle" />
         <span class="slider round"></span>
       </label>
     </header>
+
     <div class="chat-box" id="chat-box">
       <div class="bot-message">Hi! I’m LearnBot. What would you like to learn today?</div>
     </div>
+
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Ask me something..." />
+      <button id="send-btn">Send</button>
+    </div>
+
+    <script src="script.js"></script>
+  </div>
+</body>
+</html>
